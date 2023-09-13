@@ -65,7 +65,7 @@ const getAllFromDB = async (
           },
   });
 
-  const total = await prisma.student.count({where:whereConditions});
+  const total = await prisma.student.count({ where: whereConditions });
 
   return {
     meta: {
@@ -80,9 +80,47 @@ const getAllFromDB = async (
 const getDataById = async (id: string): Promise<Student | null> => {
   const result = await prisma.student.findUnique({
     where: { id },
-    include: { academicFaculty: true,academicDepartment:true,academicSemester:true },
+    include: {
+      academicFaculty: true,
+      academicDepartment: true,
+      academicSemester: true,
+    },
   });
 
+  return result;
+};
+
+const updateIntoDB = async (
+  id: string,
+  payload: Partial<Student>
+): Promise<Student> => {
+  const result = await prisma.student.update({
+    where: {
+      id,
+    },
+    data: payload,
+    include: {
+      academicFaculty: true,
+      academicDepartment: true,
+      academicSemester: true,
+    },
+  });
+  return result;
+};
+
+const deleteFromDB = async (
+  id: string,
+): Promise<Student> => {
+  const result = await prisma.student.delete({
+    where: {
+      id,
+    },
+    include: {
+      academicFaculty: true,
+      academicDepartment: true,
+      academicSemester: true,
+    },
+  });
   return result;
 };
 
@@ -90,4 +128,6 @@ export const StudentService = {
   create,
   getAllFromDB,
   getDataById,
+  updateIntoDB,
+  deleteFromDB,
 };

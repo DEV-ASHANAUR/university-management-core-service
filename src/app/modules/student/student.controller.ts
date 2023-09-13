@@ -4,8 +4,8 @@ import httpStatus from 'http-status';
 import catchAsync from '../../../shared/catchAsync';
 import pick from '../../../shared/pick';
 import sendResponse from '../../../shared/sendResponse';
-import { StudentService } from './student.service';
 import { studentFilterableFields } from './student.constants';
+import { StudentService } from './student.service';
 
 const create = catchAsync(async (req: Request, res: Response) => {
   const result = await StudentService.create(req.body);
@@ -41,8 +41,33 @@ const getDataById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const updateIntoDB = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const payload = req.body;
+  const result = await StudentService.updateIntoDB(id, payload);
+  sendResponse<Student>(res, {
+    statusCode: httpStatus.OK,
+    message: 'Student update successFully!',
+    success: true,
+    data: result,
+  });
+});
+
+const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const result = await StudentService.deleteFromDB(id);
+  sendResponse<Student>(res, {
+    statusCode: httpStatus.OK,
+    message: 'Student deleted successFully!',
+    success: true,
+    data: result,
+  });
+});
+
 export const StudentController = {
   create,
   getAllFromDB,
   getDataById,
+  updateIntoDB,
+  deleteFromDB,
 };

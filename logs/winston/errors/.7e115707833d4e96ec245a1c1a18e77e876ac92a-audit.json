@@ -49,6 +49,36 @@
             "date": 1694444666903,
             "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2023-11-09-21-error.log",
             "hash": "e476885b5cd3ffcb7c4f536f2331dff5cd12a5159049d7029c2d3431a439661d"
+        },
+        {
+            "date": 1694500526239,
+            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2023-12-09-12-error.log",
+            "hash": "35cb5a610b5a213df509ecf21dd2a6ef990b35fcfffc67678d4181cf853ce3cc"
+        },
+        {
+            "date": 1694502323415,
+            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2023-12-09-13-error.log",
+            "hash": "a6b01510de4350ae453e4a492e6ba5b5475b7b43cff18ac63b8cc700febd23de"
+        },
+        {
+            "date": 1694507619706,
+            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2023-12-09-14-error.log",
+            "hash": "a94638e1c23859f2ef39d020a2e82a4bcc7ba2b9581b3847e587192e7a643edf"
+        },
+        {
+            "date": 1694587930125,
+            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2023-13-09-12-error.log",
+            "hash": "76c2552d3b56dfa5d2d63099ae47567d6ab9cc0189d3be4770a68f7f32716981"
+        },
+        {
+            "date": 1694588856024,
+            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2023-13-09-13-error.log",
+            "hash": "a92b0b456090d096fff8a96fa0ee8ea1f9294159cb0f744c88b647e41b6dbda6"
+        },
+        {
+            "date": 1694593073385,
+            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2023-13-09-14-error.log",
+            "hash": "7468d9f7cd0ad62b68838d30560c91d53e0dbb11877ab82fe1e1ba3828b86541"
         }
     ],
     "hashType": "sha256"
