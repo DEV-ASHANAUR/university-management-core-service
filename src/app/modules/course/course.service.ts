@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Course, Prisma } from '@prisma/client';
+import { Course, CourseFaculty, Prisma } from '@prisma/client';
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/ApiError';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
@@ -205,19 +205,20 @@ const updateOneInDB = async (
       await asyncForEach(
         newPrerequisite,
         async (insertPrerequisite: IPrerequisiteCourseRequest) => {
-          const isCourse = await transactionClient.courseToPrerequisite.findFirst({
-            where: {
-              AND: [
-                {
-                  courseId: id,
-                },
-                {
-                  preRequisiteId: insertPrerequisite.courseId,
-                },
-              ],
-            },
-          });
-          if(!isCourse){
+          const isCourse =
+            await transactionClient.courseToPrerequisite.findFirst({
+              where: {
+                AND: [
+                  {
+                    courseId: id,
+                  },
+                  {
+                    preRequisiteId: insertPrerequisite.courseId,
+                  },
+                ],
+              },
+            });
+          if (!isCourse) {
             await transactionClient.courseToPrerequisite.create({
               data: {
                 courseId: id,
@@ -225,7 +226,6 @@ const updateOneInDB = async (
               },
             });
           }
-          
         }
       );
     }
@@ -268,10 +268,72 @@ const deleteIntoDB = async (id: string): Promise<Course | null> => {
   return result;
 };
 
+const assignFaculties = async (
+  id: string,
+  payload: string[]
+): Promise<CourseFaculty[]> => {
+
+  const existingFacultyAssignments = await prisma.courseFaculty.findMany({
+    where: {
+      courseId: id,
+      facultyId: { in: payload }, // Filter by the faculty IDs in the payload
+    },
+  });
+
+  // Create a Set of existing faculty IDs for faster lookup
+  const existingFacultyIds = new Set(existingFacultyAssignments.map((assignment) => assignment.facultyId));
+
+  // Filter the payload to only include faculty IDs that don't already exist
+  const facultyToAssign = payload.filter((facultyId) => !existingFacultyIds.has(facultyId));
+
+  await prisma.courseFaculty.createMany({
+    data: facultyToAssign.map(facultyId => ({
+      courseId: id,
+      facultyId: facultyId,
+    })),
+  });
+
+  const assignFacultyData = await prisma.courseFaculty.findMany({
+    where: {
+      courseId: id,
+    },
+    include: {
+      faculty: true,
+    },
+  });
+  return assignFacultyData;
+};
+
+const removeFaculties = async (
+  id: string,
+  payload: string[]
+): Promise<CourseFaculty[] | null> => {
+  await prisma.courseFaculty.deleteMany({
+    where:{
+      courseId:id,
+      facultyId: {
+        in: payload
+      }
+    }
+  });
+
+  const assignFacultyData = await prisma.courseFaculty.findMany({
+    where: {
+      courseId: id,
+    },
+    include: {
+      faculty: true,
+    },
+  });
+  return assignFacultyData;
+};
+
 export const CourseService = {
   insertIntoDB,
   getAllFromDB,
   getByIdFromDB,
   updateOneInDB,
   deleteIntoDB,
+  assignFaculties,
+  removeFaculties,
 };
