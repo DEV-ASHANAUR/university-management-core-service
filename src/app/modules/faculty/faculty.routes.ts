@@ -1,19 +1,45 @@
 import express from 'express';
+import { ENUM_USER_ROLE } from '../../../enums/user';
+import auth from '../../middlewares/auth';
 import validateRequest from '../../middlewares/validateRequest';
 import { FacultyController } from './faculty.controller';
 import { FacultyValidation } from './faculty.validation';
-import auth from '../../middlewares/auth';
-import { ENUM_USER_ROLE } from '../../../enums/user';
 
 const router = express.Router();
 
 router.post(
   '/create',
-  auth(ENUM_USER_ROLE.SUPER_ADMIN,ENUM_USER_ROLE.ADMIN),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   validateRequest(FacultyValidation.create),
   FacultyController.insertIntoDB
 );
-router.get('/',auth(ENUM_USER_ROLE.SUPER_ADMIN,ENUM_USER_ROLE.ADMIN), FacultyController.getAllFromDB);
-router.get('/:id',auth(ENUM_USER_ROLE.SUPER_ADMIN,ENUM_USER_ROLE.ADMIN), FacultyController.getByIdFromDB);
+
+router.patch(
+  '/:id',
+  validateRequest(FacultyValidation.update),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  FacultyController.updateOneInDB
+);
+router.delete(
+  '/:id',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  FacultyController.deleteByIdFromDB
+);
+
+router.get(
+  '/',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  FacultyController.getAllFromDB
+);
+router.get(
+  '/:id',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  FacultyController.getByIdFromDB
+);
+
+router.post("/:id/assign-courses",validateRequest(FacultyValidation.assignOrRemoveCourses),auth(ENUM_USER_ROLE.SUPER_ADMIN,ENUM_USER_ROLE.ADMIN),FacultyController.assignCourses);
+
+router.delete("/:id/remove-courses",validateRequest(FacultyValidation.assignOrRemoveCourses),auth(ENUM_USER_ROLE.SUPER_ADMIN,ENUM_USER_ROLE.ADMIN),FacultyController.removeCourses);
+
 
 export const FacultyRoutes = router;
