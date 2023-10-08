@@ -5,19 +5,16 @@ import ApiError from '../../../errors/ApiError';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 import prisma from '../../../shared/prisma';
-import {
-  academicFacultySearchableFields
-} from './academicFaculty.constants';
+import { academicFacultySearchableFields } from './academicFaculty.constants';
 
 import { IAcademicFacultyFilters } from './academicFaculty.interface';
 
 const createAcademicFaculty = async (
   academicFacultyData: AcademicFaculty
 ): Promise<AcademicFaculty> => {
-  
   const isExist = await prisma.academicFaculty.findFirst({
     where: {
-      title: academicFacultyData.title
+      title: academicFacultyData.title,
     },
   });
 
@@ -98,8 +95,30 @@ const getDataById = async (id: string): Promise<AcademicFaculty | null> => {
   return result;
 };
 
+const updateOneInDB = async (
+  id: string,
+  payload: Partial<AcademicFaculty>
+): Promise<AcademicFaculty | null> => {
+  const result = await prisma.academicFaculty.update({
+    where: { id },
+    data: payload,
+  });
+  return result;
+};
+
+const deleteByIdFromDB = async (
+  id: string
+): Promise<AcademicFaculty | null> => {
+  const result = await prisma.academicFaculty.delete({
+    where: { id },
+  });
+  return result;
+};
+
 export const AcademicFacultyService = {
   createAcademicFaculty,
   getAllFromDB,
   getDataById,
+  updateOneInDB,
+  deleteByIdFromDB,
 };

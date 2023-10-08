@@ -109,7 +109,7 @@ const getByIdFromDB = async (id: string): Promise<Faculty | null> => {
 
 const updateOneInDB = async (
   id: string,
-  payload: Faculty
+  payload: Partial<Faculty>
 ): Promise<Faculty | null> => {
   const result = await prisma.faculty.update({
     where: {
@@ -149,10 +149,14 @@ const assignCourses = async (
   });
 
   // Create a Set of existing course IDs for faster lookup
-  const existingCourseIds = new Set(existingCourseAssignments.map((assignment) => assignment.courseId));
+  const existingCourseIds = new Set(
+    existingCourseAssignments.map(assignment => assignment.courseId)
+  );
 
   // Filter the payload to only include course IDs that don't already exist
-  const coursesToAssign = payload.filter((courseId) => !existingCourseIds.has(courseId));
+  const coursesToAssign = payload.filter(
+    courseId => !existingCourseIds.has(courseId)
+  );
 
   await prisma.courseFaculty.createMany({
     data: coursesToAssign.map(courseId => ({

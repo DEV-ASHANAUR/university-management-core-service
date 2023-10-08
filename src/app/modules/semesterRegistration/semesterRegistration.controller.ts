@@ -1,0 +1,67 @@
+import { SemesterRegistration } from '@prisma/client';
+import { Request, Response } from 'express';
+import httpStatus from 'http-status';
+import catchAsync from '../../../shared/catchAsync';
+import pick from '../../../shared/pick';
+import sendResponse from '../../../shared/sendResponse';
+import { semesterRegistrationFilterableFields } from './semesterRegistration.constant';
+import { semesterRegistrationService } from './semesterRegistration.service';
+
+const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
+  const result = await semesterRegistrationService.insertIntoDB(req.body);
+
+  sendResponse<SemesterRegistration>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Semester Registration created',
+    data: result,
+  });
+});
+
+const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
+  const filters = pick(req.query, semesterRegistrationFilterableFields);
+  const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder']);
+  const result = await semesterRegistrationService.getAllFromDB(
+    filters,
+    options
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Semester Registration Fetch SuccessFully!',
+    data: result.data,
+    meta: result.meta,
+  });
+});
+
+const getDataById = catchAsync(async (req: Request, res: Response) => {
+  const result = await semesterRegistrationService.getByIdFromDB(req.params.id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Semester Registration Fetch SuccessFully!',
+    data: result,
+  });
+});
+
+const deleteByIdFromDB = catchAsync(async (req: Request, res: Response) => {
+  const result = await semesterRegistrationService.deleteByIdFromDB(
+    req.params.id
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Semester Registration deleted SuccessFully!',
+    data: result,
+  });
+});
+
+export const SemesterRegistrationController = {
+  insertIntoDB,
+  getAllFromDB,
+  getDataById,
+  deleteByIdFromDB,
+};

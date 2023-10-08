@@ -99,9 +99,33 @@ const getAllFromDB = async (
   };
 };
 
+const updateOneInDB = async (
+  id: string,
+  payload: Partial<AcademicSemester>
+): Promise<AcademicSemester | null> => {
+  const result = await prisma.academicSemester.update({
+    where: {
+      id,
+    },
+    data: payload,
+  });
+  return result;
+};
+
 const getDataById = async (id: string): Promise<AcademicSemester | null> => {
   const result = await prisma.academicSemester.findUnique({ where: { id } });
 
+  return result;
+};
+
+const deleteByIdFromDB = async (
+  id: string
+): Promise<AcademicSemester | null> => {
+  const result = await prisma.academicSemester.delete({
+    where: {
+      id,
+    },
+  });
   return result;
 };
 
@@ -109,4 +133,6 @@ export const AcademicSemesterService = {
   createAcademicSemester,
   getAllFromDB,
   getDataById,
+  updateOneInDB,
+  deleteByIdFromDB,
 };

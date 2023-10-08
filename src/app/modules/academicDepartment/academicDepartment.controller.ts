@@ -7,17 +7,15 @@ import sendResponse from '../../../shared/sendResponse';
 import { academicDepartmentFilterableFields } from './academicDepartment.constants';
 import { AcademicDepartmentService } from './academicDepartment.service';
 
-const create = catchAsync(
-  async (req: Request, res: Response) => {
-    const result = await AcademicDepartmentService.create(req.body);
-    sendResponse<AcademicFaculty>(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: 'Academic Department created!',
-      data: result,
-    });
-  }
-);
+const create = catchAsync(async (req: Request, res: Response) => {
+  const result = await AcademicDepartmentService.create(req.body);
+  sendResponse<AcademicFaculty>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Academic Department created!',
+    data: result,
+  });
+});
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, academicDepartmentFilterableFields);
   const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder']);
@@ -43,8 +41,37 @@ const getDataById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const updateOneInDB = catchAsync(async (req: Request, res: Response) => {
+  const result = await AcademicDepartmentService.updateOneInDB(
+    req.params.id,
+    req.body
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Academic Department updated SuccessFully!',
+    data: result,
+  });
+});
+
+const deleteByIdFromDB = catchAsync(async (req: Request, res: Response) => {
+  const result = await AcademicDepartmentService.deleteByIdFromDB(
+    req.params.id
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Academic Department Delete SuccessFully!',
+    data: result,
+  });
+});
+
 export const AcademicDepartmentController = {
   create,
   getAllFromDB,
   getDataById,
+  deleteByIdFromDB,
+  updateOneInDB,
 };
