@@ -124,7 +124,56 @@ const getByIdFromDB = async (
 ): Promise<SemesterRegistration | null> => {
   const result = await prisma.semesterRegistration.findUnique({
     where: { id },
+    include: {
+      academicSemester: true,
+    },
   });
+  return result;
+};
+
+const updateOneInDB = async (
+  id: string,
+  payload: Partial<SemesterRegistration>
+): Promise<SemesterRegistration | null> => {
+  const isExist = await prisma.semesterRegistration.findUnique({
+    where: {
+      id,
+    },
+  });
+  if (!isExist) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Data not found!');
+  }
+  if (
+    payload.status &&
+    isExist.status === SemesterRegistrationStatus.UPCOMING &&
+    payload.status !== SemesterRegistrationStatus.ONGOING
+  ) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      'Can only move from UPCOMING to ONGOING!'
+    );
+  }
+  if (
+    payload.status &&
+    isExist.status === SemesterRegistrationStatus.ONGOING &&
+    payload.status !== SemesterRegistrationStatus.ENDED
+  ) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      'Can only move from ONGOING to ENDED!'
+    );
+  }
+
+  const result = await prisma.semesterRegistration.update({
+    where: {
+      id,
+    },
+    data: payload,
+    include: {
+      academicSemester: true,
+    },
+  });
+
   return result;
 };
 
@@ -133,6 +182,9 @@ const deleteByIdFromDB = async (
 ): Promise<SemesterRegistration | null> => {
   const result = await prisma.semesterRegistration.delete({
     where: { id },
+    include: {
+      academicSemester: true,
+    },
   });
   return result;
 };
@@ -142,4 +194,5 @@ export const semesterRegistrationService = {
   getAllFromDB,
   getByIdFromDB,
   deleteByIdFromDB,
+  updateOneInDB,
 };

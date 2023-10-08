@@ -13,6 +13,12 @@ router.post(
   validateRequest(SemesterRegistrationZodValidation.create),
   SemesterRegistrationController.insertIntoDB
 );
+router.patch(
+  '/:id',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  validateRequest(SemesterRegistrationZodValidation.update),
+  SemesterRegistrationController.updateOneInDB
+);
 router.get(
   '/',
   auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
