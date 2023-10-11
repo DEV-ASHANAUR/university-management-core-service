@@ -8,6 +8,12 @@ import { SemesterRegistrationZodValidation } from './semesterRegistration.valida
 const router = express.Router();
 
 router.post(
+  '/start-registration',
+  auth(ENUM_USER_ROLE.STUDENT),
+  SemesterRegistrationController.startMyRegistration
+);
+
+router.post(
   '/',
   auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   validateRequest(SemesterRegistrationZodValidation.create),
