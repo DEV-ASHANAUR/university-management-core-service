@@ -41,4 +41,18 @@ router.delete(
   SemesterRegistrationController.deleteByIdFromDB
 );
 
+router.post(
+  '/enroll-into-course',
+  validateRequest(SemesterRegistrationZodValidation.enrollOrWithdrawCourse),
+  auth(ENUM_USER_ROLE.STUDENT),
+  SemesterRegistrationController.enrollIntoCourse
+);
+
+router.post(
+  '/withdraw-from-course',
+  validateRequest(SemesterRegistrationZodValidation.enrollOrWithdrawCourse),
+  auth(ENUM_USER_ROLE.STUDENT),
+  SemesterRegistrationController.withdrewFromCourse
+);
+
 export const SemesterRegistrationRoutes = router;
