@@ -5,7 +5,7 @@ import { StudentEnrolledCourseMarkController } from './studentEnrolledCourseMark
 
 const router = express.Router();
 
-router.patch(
+router.get(
   '/',
   auth(ENUM_USER_ROLE.FACULTY, ENUM_USER_ROLE.ADMIN),
   StudentEnrolledCourseMarkController.getAllFromDB
