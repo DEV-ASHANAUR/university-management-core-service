@@ -7,6 +7,24 @@ import { FacultyValidation } from './faculty.validation';
 
 const router = express.Router();
 
+router.get(
+  '/',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  FacultyController.getAllFromDB
+);
+
+router.get(
+  '/my-courses',
+  auth(ENUM_USER_ROLE.FACULTY),
+  FacultyController.myCourses
+);
+
+router.get(
+  '/:id',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  FacultyController.getByIdFromDB
+);
+
 router.post(
   '/create',
   auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
@@ -26,20 +44,18 @@ router.delete(
   FacultyController.deleteByIdFromDB
 );
 
-router.get(
-  '/',
+router.post(
+  '/:id/assign-courses',
+  validateRequest(FacultyValidation.assignOrRemoveCourses),
   auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
-  FacultyController.getAllFromDB
-);
-router.get(
-  '/:id',
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
-  FacultyController.getByIdFromDB
+  FacultyController.assignCourses
 );
 
-router.post("/:id/assign-courses",validateRequest(FacultyValidation.assignOrRemoveCourses),auth(ENUM_USER_ROLE.SUPER_ADMIN,ENUM_USER_ROLE.ADMIN),FacultyController.assignCourses);
-
-router.delete("/:id/remove-courses",validateRequest(FacultyValidation.assignOrRemoveCourses),auth(ENUM_USER_ROLE.SUPER_ADMIN,ENUM_USER_ROLE.ADMIN),FacultyController.removeCourses);
-
+router.delete(
+  '/:id/remove-courses',
+  validateRequest(FacultyValidation.assignOrRemoveCourses),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  FacultyController.removeCourses
+);
 
 export const FacultyRoutes = router;
