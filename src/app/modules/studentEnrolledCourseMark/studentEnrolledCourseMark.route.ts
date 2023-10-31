@@ -10,6 +10,13 @@ router.get(
   auth(ENUM_USER_ROLE.FACULTY, ENUM_USER_ROLE.ADMIN),
   StudentEnrolledCourseMarkController.getAllFromDB
 );
+
+router.get(
+  '/my-marks',
+  auth(ENUM_USER_ROLE.STUDENT),
+  StudentEnrolledCourseMarkController.getMyCourseMarks
+);
+
 router.patch(
   '/update-marks',auth(ENUM_USER_ROLE.ADMIN,ENUM_USER_ROLE.FACULTY),
   StudentEnrolledCourseMarkController.updateStudentMarks
