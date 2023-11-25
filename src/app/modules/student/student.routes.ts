@@ -24,7 +24,7 @@ router.get(
 );
 router.get('/:id', StudentController.getDataById);
 router.post(
-  '/create',
+  '/',
   auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   validateRequest(StudentValidation.create),
   StudentController.create

@@ -7,7 +7,7 @@ import { CourseValidation } from './course.validation';
 const router = express.Router();
 
 router.post(
-  '/create',
+  '/',
   validateRequest(CourseValidation.create),
   auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   CourseController.insertIntoDB

@@ -5,7 +5,7 @@ import { RoomValidation } from './room.validation';
 const router = express.Router();
 
 router.post(
-  '/create',
+  '/',
   validateRequest(RoomValidation.create),
   RoomController.insertIntoDB
 );

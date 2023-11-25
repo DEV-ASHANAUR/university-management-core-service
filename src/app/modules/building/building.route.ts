@@ -5,7 +5,7 @@ import { BuildingValidation } from './building.validation';
 const router = express.Router();
 
 router.post(
-  '/create',
+  '/',
   validateRequest(BuildingValidation.create),
   BuildingController.insertIntoDB
 );
