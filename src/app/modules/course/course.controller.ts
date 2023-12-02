@@ -49,7 +49,7 @@ const updateOneInDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 const deleteIntoDB = catchAsync(async (req: Request, res: Response) => {
-  const result = await CourseService.getByIdFromDB(req.params.id);
+  const result = await CourseService.deleteIntoDB(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

@@ -272,7 +272,6 @@ const assignFaculties = async (
   id: string,
   payload: string[]
 ): Promise<CourseFaculty[]> => {
-
   const existingFacultyAssignments = await prisma.courseFaculty.findMany({
     where: {
       courseId: id,
@@ -281,10 +280,14 @@ const assignFaculties = async (
   });
 
   // Create a Set of existing faculty IDs for faster lookup
-  const existingFacultyIds = new Set(existingFacultyAssignments.map((assignment) => assignment.facultyId));
+  const existingFacultyIds = new Set(
+    existingFacultyAssignments.map(assignment => assignment.facultyId)
+  );
 
   // Filter the payload to only include faculty IDs that don't already exist
-  const facultyToAssign = payload.filter((facultyId) => !existingFacultyIds.has(facultyId));
+  const facultyToAssign = payload.filter(
+    facultyId => !existingFacultyIds.has(facultyId)
+  );
 
   await prisma.courseFaculty.createMany({
     data: facultyToAssign.map(facultyId => ({
@@ -309,12 +312,12 @@ const removeFaculties = async (
   payload: string[]
 ): Promise<CourseFaculty[] | null> => {
   await prisma.courseFaculty.deleteMany({
-    where:{
-      courseId:id,
+    where: {
+      courseId: id,
       facultyId: {
-        in: payload
-      }
-    }
+        in: payload,
+      },
+    },
   });
 
   const assignFacultyData = await prisma.courseFaculty.findMany({
