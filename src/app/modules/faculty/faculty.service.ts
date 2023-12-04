@@ -383,8 +383,8 @@ const createFacultyFromEvent = async (e: FacultyCreatedEvent): Promise<void> => 
       academicFacultyId: e.academicFaculty.syncId
   };
 
-  const data = await insertIntoDB(faculty as Faculty);
-  console.log("RES: ", data);
+  await insertIntoDB(faculty as Faculty);
+  // console.log("RES: ", data);
 };
 
 export const FacultyService = {
