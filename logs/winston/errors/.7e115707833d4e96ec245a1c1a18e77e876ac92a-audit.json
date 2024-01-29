@@ -6,29 +6,49 @@
     "auditLog": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\.7e115707833d4e96ec245a1c1a18e77e876ac92a-audit.json",
     "files": [
         {
-            "date": 1702372906518,
-            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2023-12-12-15-error.log",
-            "hash": "90855ef1f8ed193b49efa4df7f6fa8be8368f3135387ae020f53859071ead305"
+            "date": 1705829822112,
+            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2024-21-01-15-error.log",
+            "hash": "5f26a3c7b09e4099bf2d52136a640770bd132429f067efe46e0fff0ff80e42ea"
         },
         {
-            "date": 1702376031964,
-            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2023-12-12-16-error.log",
-            "hash": "ed1d196e94cc0c446fbd72a8fb19f9df5fe077447894280f218f0e64df114068"
+            "date": 1705994572298,
+            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2024-23-01-13-error.log",
+            "hash": "d491e12b2f1852dca75c0255fba06d08581f895754c7c47c4d6f8fe58e3d0492"
         },
         {
-            "date": 1703313012647,
-            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2023-23-12-12-error.log",
-            "hash": "cb00bf246f363cc1fb2a06187bb3607a5c0745570bd890d8239f422609452f3e"
+            "date": 1706003129787,
+            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2024-23-01-15-error.log",
+            "hash": "88b18fd1096fb7e4b645707403ebcfdc2b0bc41b225e505e8d5bae8c149b3cff"
         },
         {
-            "date": 1703487109216,
-            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2023-25-12-12-error.log",
-            "hash": "f65515b4717c6da4dfee3b351919bbb0e180003ba07d4aac91a1bb0968dee06c"
+            "date": 1706410242108,
+            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2024-28-01-08-error.log",
+            "hash": "1b5f76e14fd7804c57b300e511bf91c2316f9dfaf73353418a330f6552b3928a"
         },
         {
-            "date": 1703487645757,
-            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2023-25-12-13-error.log",
-            "hash": "aa664a9ee2e3ecdc4b91dc82fb5d801ac4dfd494578a97015679d370baadae04"
+            "date": 1706414906723,
+            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2024-28-01-10-error.log",
+            "hash": "de137b7ee79e0e3fe3bacf75d0eaa062cf87e6e3c1c3f2a15d379905adc85024"
+        },
+        {
+            "date": 1706455818225,
+            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2024-28-01-21-error.log",
+            "hash": "80a59797e1a25d5abe6d110f9ee735a98b28edd1a7db4189602c29854992481b"
+        },
+        {
+            "date": 1706509290522,
+            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2024-29-01-12-error.log",
+            "hash": "35d25e4a0602facd655a7fa0ad4fac33f8035252465d157de0d008cbf6c95d6c"
+        },
+        {
+            "date": 1706533546724,
+            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2024-29-01-19-error.log",
+            "hash": "725a3e3206b12d64eebbced502ca070a15fa3e0bb978721b86246b97fd98d9f7"
+        },
+        {
+            "date": 1706536893851,
+            "name": "C:\\level-2\\university-management\\university-management-core-service\\logs\\winston\\errors\\phu-2024-29-01-20-error.log",
+            "hash": "e6958c8bd3b2fdbf236b46458e130056f06b9710ea13eef32e96b7ae0502c05f"
         }
     ],
     "hashType": "sha256"

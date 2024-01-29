@@ -9,11 +9,14 @@ import {
   EVENT_ACADEMIC_DEPARTMENT_CREATED,
   EVENT_ACADEMIC_DEPARTMENT_DELETED,
   EVENT_ACADEMIC_DEPARTMENT_UPDATED,
-  academicDepartmentFilterableFields,
+  academicDepartmentRelationalFields,
+  academicDepartmentRelationalFieldsMapper,
+  academicDepartmentSearchableFields,
 } from './academicDepartment.constants';
 
 import { RedisClient } from '../../../shared/redis';
-import { IAcademicDepartmentFilters } from './academicDepartment.interface';
+import { IAcademicDepartmentFilterRequest } from './academicDepartment.interface';
+import { IGenericResponse } from '../../../interfaces/common';
 
 const create = async (
   academicDepartmentData: AcademicDepartment
@@ -46,63 +49,73 @@ const create = async (
 };
 
 const getAllFromDB = async (
-  filters: IAcademicDepartmentFilters,
+  filters: IAcademicDepartmentFilterRequest,
   options: IPaginationOptions
-) => {
-  const { page, limit, skip } = paginationHelpers.calculatePagination(options);
+): Promise<IGenericResponse<AcademicDepartment[]>> => {
+  const { limit, page, skip } = paginationHelpers.calculatePagination(options);
   const { searchTerm, ...filterData } = filters;
+
   const andConditions = [];
 
   if (searchTerm) {
-    andConditions.push({
-      OR: academicDepartmentFilterableFields.map(field => ({
-        [field]: {
-          contains: searchTerm,
-          mode: 'insensitive',
-        },
-      })),
-    });
+      andConditions.push({
+          OR: academicDepartmentSearchableFields.map((field) => ({
+              [field]: {
+                  contains: searchTerm,
+                  mode: 'insensitive'
+              }
+          }))
+      });
   }
 
   if (Object.keys(filterData).length > 0) {
-    andConditions.push({
-      AND: Object.keys(filterData).map(key => ({
-        [key]: {
-          equals: (filterData as any)[key],
-        },
-      })),
-    });
+      andConditions.push({
+          AND: Object.keys(filterData).map((key) => {
+              if (academicDepartmentRelationalFields.includes(key)) {
+                  return {
+                      [academicDepartmentRelationalFieldsMapper[key]]: {
+                          id: (filterData as any)[key]
+                      }
+                  };
+              } else {
+                  return {
+                      [key]: {
+                          equals: (filterData as any)[key]
+                      }
+                  };
+              }
+          })
+      });
   }
 
   const whereConditions: Prisma.AcademicDepartmentWhereInput =
-    andConditions.length > 0 ? { AND: andConditions } : {};
+      andConditions.length > 0 ? { AND: andConditions } : {};
 
   const result = await prisma.academicDepartment.findMany({
-    include: {
-      academicFaculty: true,
-    },
-    where: whereConditions,
-    skip,
-    take: limit,
-    orderBy:
-      options.sortBy && options.sortOrder
-        ? {
-            [options.sortBy]: options.sortOrder,
-          }
-        : {
-            createdAt: 'desc',
-          },
+      include: {
+          academicFaculty: true
+      },
+      where: whereConditions,
+      skip,
+      take: limit,
+      orderBy:
+          options.sortBy && options.sortOrder
+              ? { [options.sortBy]: options.sortOrder }
+              : {
+                  createdAt: 'desc'
+              }
+  });
+  const total = await prisma.academicDepartment.count({
+      where: whereConditions
   });
 
-  const total = await prisma.academicDepartment.count();
-
   return {
-    meta: {
-      total,
-      page,
-      limit,
-    },
-    data: result,
+      meta: {
+          total,
+          page,
+          limit
+      },
+      data: result
   };
 };
 
