@@ -9,7 +9,7 @@ const getAvailableCourses = (
   const availableCoursesList = offeredCourses
       .filter((offeredCourse: any) => !completedCoursesId.includes(offeredCourse.courseId))
       .filter((course: any) => {
-          const preRequisites = course.course.preRequisite
+          const preRequisites = course.course.preRequsite
           if (preRequisites.length === 0) {
               return true;
           }
@@ -48,7 +48,7 @@ const getAvailableCourses = (
               }
           };
       });
-
+    // console.log("availableCoursesList",availableCoursesList)
   return availableCoursesList;
 }
 
