@@ -583,7 +583,7 @@ const getMySemesterRegCouses = async (authUserId: string) => {
         offeredCourseSection: true,
       },
     });
-  // console.log(studentCurrentSemesterTakenCourse);
+  console.log("my course",studentCurrentSemesterTakenCourse);
 
   const offeredCourse = await prisma.offeredCourse.findMany({
     where: {
