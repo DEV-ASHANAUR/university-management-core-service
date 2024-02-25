@@ -14,7 +14,10 @@ app.use(cookieParser());
 //parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+//welcome route
+app.get('/', (req: Request, res: Response) => {
+  res.json('Welcome to Cow hat !');
+});
 app.use('/api/v1', routes);
 
 
